@@ -1,6 +1,6 @@
 # @ag-ui/cli-agent-orchestrator
 
-AG-UI TypeScript client for [CLI Agent Orchestrator (CAO)](https://github.com/plauzy/cli-agent-orchestrator) backed agents.
+AG-UI TypeScript client for [CLI Agent Orchestrator (CAO)](https://github.com/awslabs/cli-agent-orchestrator) backed agents.
 
 ## Installation
 
