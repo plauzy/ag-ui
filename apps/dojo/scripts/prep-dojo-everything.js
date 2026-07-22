@@ -114,6 +114,11 @@ const ALL_TARGETS = {
     name: "AWS Strands (TypeScript)",
     cwd: path.join(integrationsRoot, "aws-strands/typescript/examples"),
   },
+  "cli-agent-orchestrator": {
+    command: "uv sync",
+    name: "CAO",
+    cwd: path.join(integrationsRoot, "cli-agent-orchestrator/python/examples"),
+  },
   "adk-middleware": {
     command: "uv sync",
     name: "ADK Middleware",

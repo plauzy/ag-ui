@@ -420,6 +420,23 @@ const agentFilesMapper: Record<
       {},
     );
   },
+  "cli-agent-orchestrator": (agentKeys: string[]) => {
+    // Feature module filenames use the underscore keys directly
+    // (agentic_chat.py, shared_state.py, human_in_the_loop.py, interrupt.py).
+    return agentKeys.reduce(
+      (acc, agentId) => ({
+        ...acc,
+        [agentId]: [
+          path.join(
+            __dirname,
+            integrationsFolderPath,
+            `/cli-agent-orchestrator/python/examples/server/${agentId}.py`,
+          ),
+        ],
+      }),
+      {},
+    );
+  },
   "microsoft-agent-framework-python": (agentKeys: string[]) => {
     return agentKeys.reduce(
       (acc, agentId) => ({

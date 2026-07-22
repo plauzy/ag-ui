@@ -28,6 +28,7 @@ import { SpringAiAgent } from "@ag-ui/spring-ai";
 import { HttpAgent } from "@ag-ui/client";
 import { A2AMiddlewareAgent } from "@ag-ui/a2a-middleware";
 import { AWSStrandsAgent } from "@ag-ui/aws-strands";
+import { CliAgentOrchestratorAgent } from "@ag-ui/cli-agent-orchestrator";
 import { A2AAgent } from "@ag-ui/a2a";
 import { A2AClient } from "@a2a-js/sdk/client";
 // TODO: fix this — re-enable when langchain dojo agent is restored (see below)
@@ -621,6 +622,22 @@ export const agentsIntegrations = {
     }
     return agents;
   },
+
+  // CLI Agent Orchestrator (CAO): a real-process, multi-CLI fleet exposed over
+  // AG-UI. The example server mounts each feature on a hyphenated path and
+  // emits stock EventEncoder frames, so the thin HttpAgent subclass consumes
+  // them with zero extra wire code. The `interrupt` feature is the flagship —
+  // a live permission prompt answered via the AG-UI interrupt lifecycle.
+  "cli-agent-orchestrator": async () =>
+    mapAgents(
+      (path) => new CliAgentOrchestratorAgent({ url: `${envVars.caoUrl}/${path}/` }),
+      {
+        agentic_chat: "agentic-chat",
+        shared_state: "shared-state",
+        human_in_the_loop: "human-in-the-loop",
+        interrupt: "interrupt",
+      },
+    ),
 
   ag2: async () =>
     mapAgents((path) => new Ag2Agent({ url: `${envVars.ag2Url}/${path}` }), {

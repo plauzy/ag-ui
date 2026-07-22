@@ -185,6 +185,14 @@ const ALL_SERVICES = {
       env: { PORT: 8022 },
     },
   ],
+  "cli-agent-orchestrator": [
+    {
+      command: "uv run dev",
+      name: "CAO",
+      cwd: path.join(integrationsRoot, "cli-agent-orchestrator/python/examples"),
+      env: { PORT: 8024, CAO_AGUI_ENABLED: 1 },
+    },
+  ],
   "adk-middleware": [
     {
       command: "uv run dev",

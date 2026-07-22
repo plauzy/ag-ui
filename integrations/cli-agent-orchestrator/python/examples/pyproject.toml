@@ -1,0 +1,34 @@
+[project]
+name = "cli-agent-orchestrator-server"
+version = "0.0.1"
+description = "CLI Agent Orchestrator (CAO) example server for the AG-UI Dojo (keyless mock_cli fleet)"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    # The AG-UI run plane lives in CAO's [agui] extra (ag-ui-protocol). Phase 2
+    # (the L2 constructs + POST /agui/v1/run) ships in 2.3.0
+    # (awslabs/cli-agent-orchestrator#458 / #485). Standalone — no dependency on
+    # a CAO source checkout, so there is no cross-repo drift risk.
+    "cli-agent-orchestrator[agui]>=2.3.0",
+    "fastapi>=0.115.12",
+    "uvicorn>=0.34.3",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=8.0",
+    "httpx>=0.27",
+]
+
+[project.scripts]
+dev = "server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["server"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
