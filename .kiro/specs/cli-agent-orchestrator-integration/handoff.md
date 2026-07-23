@@ -179,3 +179,74 @@ followed by the roadmap table with each row linked to a verifiable artifact. The
 "audit fleet visualizing itself" sentence depends on shipping the
 `ag-ui-meta-dogfood` evidence via canonical `awslabs/…` URLs — wire that in
 before using the line.
+
+
+
+---
+
+## 4. Related PRs (fork: plauzy/ag-ui)
+
+| PR | Branch | Scope |
+|---|---|---|
+| [#4](https://github.com/plauzy/ag-ui/pull/4) | `spec/cao-agui-integration` | The spec plan (requirements / design / tasks) |
+| [#5](https://github.com/plauzy/ag-ui/pull/5) | `feat/cao-agui-integration` | The implementation (TS thin client + keyless server + Dojo wiring + tests) |
+| [#6](https://github.com/plauzy/ag-ui/pull/6) | `spec/cao-agui-handoff` | This handoff (differentiators + worker prompt + PR lede) |
+
+> Cross-links live only in these `.kiro/` planning docs. The upstream-bound
+> integration code in #5 deliberately carries **no fork PR numbers** — it must be
+> clean for `ag-ui-protocol/ag-ui`.
+
+---
+
+## 5. Executing this plan with a CAO fleet (dogfood the orchestrator)
+
+The highest-leverage move is to build the remaining work **with a CAO fleet** —
+so finishing the integration *is* the flagship demo: the fleet, observed through
+the very AG-UI surface it ships (the `ag-ui-meta-dogfood` "audit fleet
+visualizes itself" loop).
+
+**Topology (heterogeneous on purpose — proves differentiator #2):**
+- **Supervisor** (`kiro_cli`) — owns `.kiro/specs/*`, decomposes `tasks.md`,
+  delegates, gates.
+- **Worker A** (`claude_code`) — TS client + vitest.
+- **Worker B** (`codex`) — Python example server + pytest contract suite.
+- **Worker C** (`kiro_cli`) — Dojo wiring + Playwright `caoTests` + `dojo-e2e.yml`.
+- **Reviewer** (any provider) — runs the gates, reviews diffs, blocks on red.
+
+**Wiring — all CAO built-ins:**
+- Supervisor spawns each worker as a real tmux process and delegates over MCP
+  (`send_message` / handoff); uses inbox delivery to steer running terminals
+  mid-run.
+- Observe the entire run live on `GET /agui/v1/stream`, folded by
+  `SupervisorDashboardStream` + `MultiAgentSessionTimeline`.
+- Worker permission prompts surface as AG-UI interrupts via
+  `AgentHandoffWithApproval` → supervisor/human answers with `resume[]`. The
+  build **exercises differentiator #3 on itself**.
+- Progress/diffs via the allow-listed `emit_ui` components.
+
+**Shift-left gate (non-negotiable):** the supervisor does NOT accept a task until
+its fail-closed proof is green — a red gate is a handoff *back* to the worker,
+never a merge:
+- Worker A: `pnpm build && pnpm test && pnpm test:exports`
+- Worker B: `uv run --extra test pytest` (7/7)
+- Worker C: local Dojo `caoTests` green, incl. the interrupt **approve AND deny**
+
+**Dogfood capture:** run it through `examples/ag-ui/ag-ui-meta-dogfood` +
+`ag-ui-construct-demos` so a PASS emits the GIFs the upstream PR embeds (canonical
+`awslabs/…` URLs). The recording of the fleet *finishing this integration* is the
+PR's real-provider evidence.
+
+**Cross-provider proof:** assign the SAME feature (e.g. `shared_state`) to ≥3
+providers and assert uniform rendering (`CrossProviderStateSync`) — captured in
+the same run.
+
+**One-liner to hand the supervisor:**
+
+```
+Read .kiro/specs/cli-agent-orchestrator-integration/{requirements,design,tasks,handoff}.md.
+Execute tasks.md via a heterogeneous worker fleet (kiro_cli, claude_code, codex).
+Gate every task on its fail-closed test; hand a task back on red, never merge red.
+Answer worker permission prompts through the AG-UI interrupt lifecycle (resume[]).
+Record the run via ag-ui-meta-dogfood for the PR evidence.
+Canonical awslabs URLs only; pin CAO to edf61cad; strictly additive.
+```
