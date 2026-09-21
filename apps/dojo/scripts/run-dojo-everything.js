@@ -93,9 +93,9 @@ const ALL_SERVICES = {
   ],
   "crew-ai": [
     {
-      command: "poetry run dev",
+      command: "uv run dev",
       name: "CrewAI",
-      cwd: path.join(integrationsRoot, "crew-ai/python"),
+      cwd: path.join(integrationsRoot, "crew-ai/python/examples"),
       env: { PORT: 8003 },
     },
   ],
@@ -174,7 +174,7 @@ const ALL_SERVICES = {
       command: "poetry run dev",
       name: "AWS Strands",
       cwd: path.join(integrationsRoot, "aws-strands/python/examples"),
-      env: { PORT: 8017 },
+      env: { PORT: 8017, STRANDS_DEMO_FIXED_WEATHER: "1" },
     },
   ],
   "aws-strands-typescript": [
@@ -182,7 +182,7 @@ const ALL_SERVICES = {
       command: "pnpm run dojo",
       name: "AWS Strands (TypeScript)",
       cwd: path.join(integrationsRoot, "aws-strands/typescript/examples"),
-      env: { PORT: 8022 },
+      env: { PORT: 8022, STRANDS_DEMO_FIXED_WEATHER: "1" },
     },
   ],
   "adk-middleware": [
@@ -242,6 +242,61 @@ const ALL_SERVICES = {
       cwd: path.join(integrationsRoot, "claude-agent-sdk/typescript"),
       env: {
         PORT: 8020,
+        ANTHROPIC_API_KEY:
+          process.env.ANTHROPIC_API_KEY ||
+          "sk-ant-api03-test-key-for-llmock-000000000000000000000000000000000000000000000000-000000000000AA",
+        ...(!process.env.ANTHROPIC_API_KEY && {
+          ANTHROPIC_BASE_URL: "http://localhost:5555",
+        }),
+      },
+    },
+  ],
+  "claude-managed-agents-dotnet": [
+    {
+      // Provision the example agents (idempotent) before serving; without a
+      // real key the server still starts and reports zero routes.
+      command:
+        'dotnet run --project AGUIDojoServer/AGUIDojoServer.csproj --no-build -- setup; dotnet run --project AGUIDojoServer/AGUIDojoServer.csproj --urls "http://localhost:8026" --no-build',
+      name: "Claude Managed Agents (.NET)",
+      cwd: path.join(integrationsRoot, "claude-managed-agents/dotnet/examples"),
+      env: {
+        PORT: 8026,
+        ANTHROPIC_API_KEY:
+          process.env.ANTHROPIC_API_KEY ||
+          "sk-ant-api03-test-key-for-llmock-000000000000000000000000000000000000000000000000-000000000000AA",
+        ...(!process.env.ANTHROPIC_API_KEY && {
+          ANTHROPIC_BASE_URL: "http://localhost:5555",
+        }),
+      },
+    },
+  ],
+  "claude-managed-agents-python": [
+    {
+      // Provision the example agents (idempotent) before serving; without a
+      // real key the server still starts and reports zero routes.
+      command: "uv run python setup.py; uv run dev",
+      name: "Claude Managed Agents (Python)",
+      cwd: path.join(integrationsRoot, "claude-managed-agents/python/examples"),
+      env: {
+        PORT: 8025,
+        ANTHROPIC_API_KEY:
+          process.env.ANTHROPIC_API_KEY ||
+          "sk-ant-api03-test-key-for-llmock-000000000000000000000000000000000000000000000000-000000000000AA",
+        ...(!process.env.ANTHROPIC_API_KEY && {
+          ANTHROPIC_BASE_URL: "http://localhost:5555",
+        }),
+      },
+    },
+  ],
+  "claude-managed-agents-typescript": [
+    {
+      // Provision the example agents (idempotent) before serving; without a
+      // real key the server still starts and reports zero routes.
+      command: "npx tsx examples/setup.ts; npx tsx examples/server.ts",
+      name: "Claude Managed Agents (TypeScript)",
+      cwd: path.join(integrationsRoot, "claude-managed-agents/typescript"),
+      env: {
+        PORT: 8024,
         ANTHROPIC_API_KEY:
           process.env.ANTHROPIC_API_KEY ||
           "sk-ant-api03-test-key-for-llmock-000000000000000000000000000000000000000000000000-000000000000AA",
@@ -313,6 +368,9 @@ const ALL_SERVICES = {
         AWS_STRANDS_TYPESCRIPT_URL: "http://localhost:8022",
         CLAUDE_AGENT_SDK_PYTHON_URL: "http://localhost:8019",
         CLAUDE_AGENT_SDK_TYPESCRIPT_URL: "http://localhost:8020",
+        CLAUDE_MANAGED_AGENTS_DOTNET_URL: "http://localhost:8026",
+        CLAUDE_MANAGED_AGENTS_PYTHON_URL: "http://localhost:8025",
+        CLAUDE_MANAGED_AGENTS_TYPESCRIPT_URL: "http://localhost:8024",
         LANGROID_URL: "http://localhost:8021",
         NEXT_PUBLIC_CUSTOM_DOMAIN_TITLE:
           "cpkdojo.local___CopilotKit Feature Viewer",
@@ -349,6 +407,9 @@ const ALL_SERVICES = {
         AWS_STRANDS_TYPESCRIPT_URL: "http://localhost:8022",
         CLAUDE_AGENT_SDK_PYTHON_URL: "http://localhost:8019",
         CLAUDE_AGENT_SDK_TYPESCRIPT_URL: "http://localhost:8020",
+        CLAUDE_MANAGED_AGENTS_DOTNET_URL: "http://localhost:8026",
+        CLAUDE_MANAGED_AGENTS_PYTHON_URL: "http://localhost:8025",
+        CLAUDE_MANAGED_AGENTS_TYPESCRIPT_URL: "http://localhost:8024",
         LANGROID_URL: "http://localhost:8021",
         NEXT_PUBLIC_CUSTOM_DOMAIN_TITLE:
           "cpkdojo.local___CopilotKit Feature Viewer",
