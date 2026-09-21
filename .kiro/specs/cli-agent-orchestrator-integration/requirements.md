@@ -20,7 +20,7 @@ AG-UI surface. Do **not** invent protocol behavior; mirror these:
 
 | Source | Reference | What it establishes |
 |---|---|---|
-| CAO AG-UI Phase 2 (L2 constructs + run plane) | `awslabs/cli-agent-orchestrator` @ **`edf61cad65a8183d37466f2d112d19a365cfca5c`** (PRs #485/#458) | The endpoints, wire dialects, interrupt lifecycle, and privacy boundary this integration projects |
+| CAO AG-UI Phase 2 (L2 constructs + run plane) | `awslabs/cli-agent-orchestrator` @ **`2fcc3efa6c6e70039e5b9a7308ee67cd1f024885`** (CAO v2.5.0; contains the Phase 2 work from PRs #485/#458) | The endpoints, wire dialects, interrupt lifecycle, and privacy boundary this integration projects |
 | CAO AG-UI Phase 0–1 (L1 adapter) | PR #436 (merged) | `GET /agui/v1/stream`, `emit_ui`, 6-component allow-list, `STATE_SNAPSHOT`/RFC-6902 `STATE_DELTA` |
 | CAO proposal / differentiators | issue #386 | The unique-value conviction (§ Differentiators below) |
 | CAO AG-UI reference doc | `docs/agui.md` @ pinned commit | Ambient vs run plane, replay contract, generative-UI safety model |
@@ -32,6 +32,39 @@ AG-UI surface. Do **not** invent protocol behavior; mirror these:
 the pinned commit above (not a moving branch tip). If a task needs CAO code that
 is not present at that commit, stop and flag it rather than assuming a newer
 commit.
+
+### Pin refresh audit — 2026-09-21
+
+The pin moved from `edf61cad65a8183d37466f2d112d19a365cfca5c` (2026-07-22, CAO
+v2.3.0 — the original AG-UI Phase 2 commit) to
+`2fcc3efa6c6e70039e5b9a7308ee67cd1f024885` (2026-09-20, CAO v2.5.0), which was
+`awslabs/cli-agent-orchestrator` `main` at the time of refresh — **151 commits**
+ahead of the previous pin. Every contract claim in this spec was re-verified
+against the new pin before the move:
+
+| Re-verified at the new pin | Result |
+|---|---|
+| `docs/agui.md` | **Byte-identical** to the old pin — the two-plane model, replay contract, generative-UI safety model, and L2 construct library sections are unchanged |
+| `POST /agui/v1/run` | Present (`api/main.py`) |
+| `GET /agui/v1/stream` | Present |
+| `POST /agui/v1/emit_ui`, `POST /agui/v1/interrupts/{id}/resume` | Present |
+| `RUN_FINISHED outcome={type:"interrupt"}` | Present (`services/agui/run_plane.py`) |
+| `STATE_SNAPSHOT` + RFC-6902 `STATE_DELTA` | Present |
+| `[agui]` extra range | **Unchanged** — `ag-ui-protocol>=0.1.19,<0.2.0` |
+| `mock_cli` provider (example-server fleet) | Present |
+| L2 construct library | Intact; no module removed or renamed |
+
+**Only change to CAO's AG-UI surface across those 151 commits:** commit
+`62e721e` ("feat: add Oh My Pi provider") touched
+`services/agui/handoff_approval.py` to add an ordered multi-key approval action
+(`{"type":"keys",…}`) plus partial-delivery retry safety. It is additive,
+provider-local, and does **not** alter the wire surface this integration
+consumes — existing providers retain single-action behavior.
+
+**Net effect on this spec:** no requirement, design decision, or task changed
+meaning. The only downstream edit is that the example server's
+`cli-agent-orchestrator[agui]==<pinned>` now resolves to the **v2.5.0** release
+rather than v2.3.0.
 
 ## The CAO AG-UI surface this integration consumes (verbatim contract)
 

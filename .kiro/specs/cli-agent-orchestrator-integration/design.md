@@ -3,7 +3,8 @@
 ## 1. Guiding principle: thin projection, not re-implementation
 
 CAO already ships a complete, merged AG-UI surface (pinned commit
-`edf61cad65a8183d37466f2d112d19a365cfca5c`, PRs #485/#458). This integration is
+`2fcc3efa6c6e70039e5b9a7308ee67cd1f024885` — CAO v2.5.0, which contains the
+AG-UI Phase 2 work from PRs #485/#458). This integration is
 a **thin projection** of that surface into the AG-UI monorepo + Dojo. The design
 bias throughout is: *if you are writing protocol logic here, you have misread the
 CAO contract.* The stock `HttpAgent` already speaks CAO's run plane; our job is
@@ -210,7 +211,7 @@ visitor meets it at any depth:
 
 | Risk | Mitigation |
 |---|---|
-| CAO contract drift after the pinned commit | Pin every reference to `edf61cad…`; `docs-canonical-links` + e2e catch drift |
+| CAO contract drift after the pinned commit | Pin every reference to `2fcc3efa…`; `docs-canonical-links` + e2e catch drift |
 | Cross-repo coupling | Example server depends only on the published `[agui]` extra, not the CAO checkout |
 | Governance ambiguity (AG-UI is CopilotKit-stewarded) | Scope is additive + version-pinned to a single SDK range (`ag-ui-protocol>=0.1.19,<0.2.0`) |
 | Reviewer wants smaller PRs | Natural split documented in tasks: (a) TS client, (b) example server, (c) Dojo wiring + e2e, (d) docs |

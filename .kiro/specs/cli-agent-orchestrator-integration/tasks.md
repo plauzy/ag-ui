@@ -1,7 +1,8 @@
 # Tasks — CLI Agent Orchestrator (CAO) AG-UI Integration
 
-> Ground truth: CAO @ `edf61cad65a8183d37466f2d112d19a365cfca5c`
-> (`awslabs/cli-agent-orchestrator`, PRs #485/#458). Mirror
+> Ground truth: CAO @ `2fcc3efa6c6e70039e5b9a7308ee67cd1f024885`
+> (`awslabs/cli-agent-orchestrator` v2.5.0, containing the Phase 2 work from
+> PRs #485/#458). Mirror
 > `integrations/aws-strands/`. Every task cites the requirement(s) it satisfies.
 > **Verification habit (from prior learnings):** before committing, `grep` the
 > incorporated/authored files for a known marker from the pinned commit and

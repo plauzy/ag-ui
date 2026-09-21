@@ -6,7 +6,9 @@ makes this integration unique; (2) a ready-to-paste worker prompt with the
 roadmap-alignment mapping; and (3) a maintainer-facing PR lede to adapt.
 
 **Ground truth (pinned):** CAO @ `awslabs/cli-agent-orchestrator`
-`edf61cad65a8183d37466f2d112d19a365cfca5c` (AG-UI Phase 2, PRs #485/#458).
+`2fcc3efa6c6e70039e5b9a7308ee67cd1f024885` (v2.5.0; contains AG-UI Phase 2,
+PRs #485/#458). See the *Pin refresh audit* in `requirements.md` for the
+re-verification behind this pin.
 Canonical URLs only. Closes `ag-ui-protocol/ag-ui#2215`; supersedes/reconciles
 `#2216`. Read `requirements.md` / `design.md` / `tasks.md` in this directory
 first. Fork PRs: `plauzy/ag-ui#4` (this spec) · `plauzy/ag-ui#5`
@@ -51,7 +53,7 @@ asserting artifact that goes red the instant the contract drifts.
 Context: implementation is in `plauzy/ag-ui` PR #5 (branch feat/cao-agui-integration),
 spec at `.kiro/specs/cli-agent-orchestrator-integration/`, closing
 ag-ui-protocol/ag-ui#2215 / superseding #2216. CAO source of truth is PINNED at
-awslabs/cli-agent-orchestrator @ edf61cad… (canonical URLs only). Read the spec first.
+awslabs/cli-agent-orchestrator @ 2fcc3efa… (canonical URLs only). Read the spec first.
 
 Your job is NOT to add features — it is to make five differentiators *legible and
 proven*, then package that as an upstream PR a maintainer cannot ignore. Adhere
@@ -85,7 +87,7 @@ asserting artifact) and dogfooding (build it with the thing it ships).
   vocabulary, not any provider's low-level implementation.
 - CANONICAL URLS ONLY (awslabs/cli-agent-orchestrator); keep the
   docs-canonical-links guard green. Strictly additive; regenerate files.json and
-  pnpm-lock.yaml properly; no build artifacts committed; pin CAO to edf61cad.
+  pnpm-lock.yaml properly; no build artifacts committed; pin CAO to 2fcc3efa.
 
 ## Close the verification gap
 Run the full local e2e (pnpm install → prep/run-dojo-everything for dojo +
@@ -248,5 +250,5 @@ Execute tasks.md via a heterogeneous worker fleet (kiro_cli, claude_code, codex)
 Gate every task on its fail-closed test; hand a task back on red, never merge red.
 Answer worker permission prompts through the AG-UI interrupt lifecycle (resume[]).
 Record the run via ag-ui-meta-dogfood for the PR evidence.
-Canonical awslabs URLs only; pin CAO to edf61cad; strictly additive.
+Canonical awslabs URLs only; pin CAO to 2fcc3efa; strictly additive.
 ```
