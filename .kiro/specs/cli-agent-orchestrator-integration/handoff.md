@@ -7,12 +7,17 @@ roadmap-alignment mapping; and (3) a maintainer-facing PR lede to adapt.
 
 **Ground truth (pinned):** CAO @ `awslabs/cli-agent-orchestrator`
 `2fcc3efa6c6e70039e5b9a7308ee67cd1f024885` (v2.5.0; contains AG-UI Phase 2,
-PRs #485/#458). See the *Pin refresh audit* in `requirements.md` for the
-re-verification behind this pin.
+PR #485, tracked by issue #458). See the *Pin refresh audit* in
+`requirements.md` for the re-verification behind this pin.
 Canonical URLs only. Closes `ag-ui-protocol/ag-ui#2215`; supersedes/reconciles
-`#2216`. Read `requirements.md` / `design.md` / `tasks.md` in this directory
-first. Fork PRs: `plauzy/ag-ui#4` (this spec) · `plauzy/ag-ui#5`
-(implementation, branch `feat/cao-agui-integration`).
+`#2216` (both still open upstream). Read `requirements.md` / `design.md` /
+`tasks.md` in this directory first.
+
+**Fork PRs:** `plauzy/ag-ui#6` — *this spec*, branch `spec/cao-agui-handoff`
+(open). Closed predecessors, kept for provenance: `plauzy/ag-ui#4` (earlier
+spec, branch `spec/cao-agui-integration`) and `plauzy/ag-ui#5`
+(implementation, branch `feat/cao-agui-integration` — the branch still exists
+on the fork even though the PR is closed).
 
 ---
 
@@ -50,7 +55,8 @@ asserting artifact that goes red the instant the contract drifts.
 ```
 # Task: Make the CAO × AG-UI integration DEMONSTRATE its differentiators and draw AG-UI maintainer attention
 
-Context: implementation is in `plauzy/ag-ui` PR #5 (branch feat/cao-agui-integration),
+Context: implementation work lives on branch feat/cao-agui-integration in
+`plauzy/ag-ui` (opened as PR #5, now closed — rebase/reopen as needed),
 spec at `.kiro/specs/cli-agent-orchestrator-integration/`, closing
 ag-ui-protocol/ag-ui#2215 / superseding #2216. CAO source of truth is PINNED at
 awslabs/cli-agent-orchestrator @ 2fcc3efa… (canonical URLs only). Read the spec first.
@@ -127,8 +133,8 @@ with "Fixes #2215", reconciled against #2216.
 ```
 
 **Honesty guardrail for the worker:** several roadmap rows (steering, tool-output
-streaming, the state *write* path, background agents) go beyond what PR #5 ships
-tests for today. Each row MUST link to an existing CAO test/demo at the pinned
+streaming, the state *write* path, background agents) go beyond what the
+`feat/cao-agui-integration` implementation branch ships tests for today. Each row MUST link to an existing CAO test/demo at the pinned
 commit, or be scoped down to what is provable. Do not let the table become
 aspirational marketing — that discipline is what has earned the credibility so
 far.

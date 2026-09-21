@@ -20,7 +20,7 @@ AG-UI surface. Do **not** invent protocol behavior; mirror these:
 
 | Source | Reference | What it establishes |
 |---|---|---|
-| CAO AG-UI Phase 2 (L2 constructs + run plane) | `awslabs/cli-agent-orchestrator` @ **`2fcc3efa6c6e70039e5b9a7308ee67cd1f024885`** (CAO v2.5.0; contains the Phase 2 work from PRs #485/#458) | The endpoints, wire dialects, interrupt lifecycle, and privacy boundary this integration projects |
+| CAO AG-UI Phase 2 (L2 constructs + run plane) | `awslabs/cli-agent-orchestrator` @ **`2fcc3efa6c6e70039e5b9a7308ee67cd1f024885`** (CAO v2.5.0; contains the Phase 2 work from PR #485, tracked by issue #458) | The endpoints, wire dialects, interrupt lifecycle, and privacy boundary this integration projects |
 | CAO AG-UI Phase 0–1 (L1 adapter) | PR #436 (merged) | `GET /agui/v1/stream`, `emit_ui`, 6-component allow-list, `STATE_SNAPSHOT`/RFC-6902 `STATE_DELTA` |
 | CAO proposal / differentiators | issue #386 | The unique-value conviction (§ Differentiators below) |
 | CAO AG-UI reference doc | `docs/agui.md` @ pinned commit | Ambient vs run plane, replay contract, generative-UI safety model |

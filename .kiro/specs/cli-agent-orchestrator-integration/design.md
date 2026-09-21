@@ -4,7 +4,7 @@
 
 CAO already ships a complete, merged AG-UI surface (pinned commit
 `2fcc3efa6c6e70039e5b9a7308ee67cd1f024885` — CAO v2.5.0, which contains the
-AG-UI Phase 2 work from PRs #485/#458). This integration is
+AG-UI Phase 2 work from PR #485, tracked by issue #458). This integration is
 a **thin projection** of that surface into the AG-UI monorepo + Dojo. The design
 bias throughout is: *if you are writing protocol logic here, you have misread the
 CAO contract.* The stock `HttpAgent` already speaks CAO's run plane; our job is
