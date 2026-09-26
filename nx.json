@@ -113,6 +113,11 @@
       ],
       "cache": true
     },
+    "test:exports": {
+      "dependsOn": [
+        "build"
+      ]
+    },
     "test:watch": {
       "dependsOn": [
         "build"
